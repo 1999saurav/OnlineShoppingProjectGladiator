@@ -1,0 +1,102 @@
+package com.example.OnlineShopping;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.example.data.Cart;
+import com.example.data.Login;
+import com.example.data.PlacedOrder;
+import com.example.data.Reset;
+import com.example.repository.UserNotFoundException;
+import com.example.service.UserServiceImp;
+
+
+@SpringBootTest
+class OnlineShoppingApplicationTests {
+	@Autowired
+	UserServiceImp userServiceDao;
+	@Test
+	void contextLoads() {
+	}
+	
+	
+	@Test
+	public void getUserByEmailAndPassword() throws UserNotFoundException{
+		Login login=new Login();
+		login.setEmail("sergio@gmail.com");
+		login.setPassword("password@1234");
+		int id=userServiceDao.login(login);
+		if(id>0) {
+			System.out.println("login successfully: Id is"+id);
+		}
+		else
+		{
+			System.out.println("User not found");
+		}
+	}
+	
+	@Test
+	 public void updatePasswordFromMail() throws UserNotFoundException
+	 {
+		Reset reset=new Reset();
+		reset.setEmail("sergio@gmail.com");
+		reset.setPassword("password@1234");
+		int rs=userServiceDao.updatePasswordFromMailService(reset);
+		
+		if(rs==100) {
+			System.out.println("Password update successfully");
+		}
+		else{
+			System.out.println("Not found");
+		}
+	 
+	 }
+	
+	@Test
+	public void getMyPlacedOrders() {
+		
+		List<PlacedOrder> placeOrder=userServiceDao.getMyPlacedOrders(323);
+		for(PlacedOrder order:placeOrder) {
+		System.out.println(order.getpBrand());	
+		System.out.println(order.getpId());
+		System.out.println(order.getpImage());
+		System.out.println(order.getpName());
+		System.out.println(order.getpOrderDate());
+		System.out.println(order.getpPrice());
+		System.out.println(order.getpQty());
+		System.out.println(order.getpType());
+		
+			
+		}
+	}
+	
+	
+	@Test
+	public void getCartValues(){
+		List<Cart> cart=userServiceDao.getCartValues(314);
+		
+		
+	}
+	
+	@Test
+	public void placeOrder() {
+		List<Cart> cart=userServiceDao.getCartValues(314);
+		
+		boolean check=userServiceDao.placeOrder(cart, "COD");
+		if(check==true) {
+			System.out.println("order placed successfully");
+		}
+		else {
+			System.out.println("Not placed please verify details");
+		}
+		
+	}
+	
+	
+	
+}
+
+
