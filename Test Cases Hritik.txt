@@ -1,0 +1,181 @@
+package com.example.OnlineShopping;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.internal.build.AllowSysOut;
+import org.hibernate.query.Query;
+import org.junit.jupiter.api.Test;
+
+import com.example.pojo.AdminTable;
+import com.example.pojo.ProductTable;
+import com.example.pojo.RetailerTable;
+import com.example.service.AddProduct;
+import com.example.service.CustomerException;
+import com.example.service.Product;
+import com.example.service.RetailerDAOImpl;
+import com.example.service.RetailerSignUp;
+
+public class TestCases {
+	
+	RetailerDAOImpl retailerDAOimpl;
+	
+	@Test
+	public void getRetailerByEmail() throws CustomerException {
+		
+		String email=" ";
+		RetailerTable retailerTable=RetailerDAOImpl.getRetailerByEmail(email);
+		System.out.println(retailerTable.getREmail());
+		System.out.println(retailerTable.getRId());
+		System.out.println(retailerTable.getRMobile());
+		System.out.println(retailerTable.getRName());
+		System.out.println(retailerTable.getRPassword());
+	}
+	
+	
+	@Test
+	public void addRetailer() {
+		// TODO Auto-generated method stub
+		
+		RetailerSignUp newRetailer=new RetailerSignUp();
+		newRetailer..setrId(int rId)
+		newRetailer.setuName(String uName) ;
+			
+
+		newRetailer.setuEmail(String uEmail);
+	
+	
+		newRetailer.setuPassword(String uPassword);
+
+	
+		newRetailer.setuPhone(int uPhone);
+		
+		
+		int uId=retailerDAOimpl.addRetailer(newRetailer);
+		
+		
+		
+	}
+	
+	
+	@Test
+	public void updateRetailer(RetailerSignUp ) {
+		
+		RetailerSignUp updateRetailer=new RetailerSignUp();
+		newRetailer..setrId(int rId)
+		newRetailer.setuName(String uName) ;
+			
+
+		newRetailer.setuEmail(String uEmail);
+	
+	
+		newRetailer.setuPassword(String uPassword);
+
+	
+		newRetailer.setuPhone(int uPhone);
+		
+		RetailerTable newRetailer=retailerDAOimpl.updateRetailer(updateRetailer);
+		
+		System.out.println(newRetailer.getrId());
+		System.out.println(newRetailer.getuEmail());
+		System.out.println(newRetailer.getuPassword());
+		System.out.println(newRetailer.getuPhone());
+		System.out.println(newRetailer.getuName());
+		
+
+		
+	}
+	
+	
+	@Test
+	public void deleteRetailerById() {
+		String delete=	retailerDAOimpl.deleteRetailerById(rid);
+		if(delete!=null) {
+    
+	        System.out.println("Deleted Successfully"); 
+	}
+	else
+		System.out.println( "No retailer  found");
+	}
+	
+	@Test
+	public String deleteProductByrid(int rid) {
+		String delete=	retailerDAOimpl.deleteRetailerById(rid);
+		if(delete!=null) {
+    
+	        System.out.println("Deleted Successfully"); 
+	}
+	else {
+		System.out.println( "No product  found");
+	}
+	}
+	
+	@Test
+	public void getRetailerByEmailAndPassword() throws CustomerException{
+		// TODO Auto-generated method stub
+		
+		int ok=retailerDAOimpl.getRetailerByEmailAndPassword(String email, String password);
+		if(ok>0)
+			System.out.println("Found");
+		else
+			System.out.println("Not found");
+
+	}
+	
+	@Test
+	public void showAllRetailers() {
+		// TODO Auto-generated method stub
+		List<RetailerSignUp> retailers = retailerDAOimpl.showAllRetailers();
+		
+		for(RetailerTable r : retailerTables)
+		{
+			System.out.println(r.getREmail());
+			System.out.println(r.getRId());
+			System.out.println(r.getRMobile());
+			System.out.println(r.getRName());
+			System.out.println(r.getRPassword());
+			AdminTable admin=new AdminTable();
+			admin=r.getAdminTable();
+			System.out.println(admin.getAEmail());
+			System.out.println(admin.getAId());
+		System.out.println(admin.getAName());
+		System.out.println(admin.getAPassword());
+		List<ProductTable> productTable=r.getProductTables();
+		for(ProductTable p:productTable) {
+			System.out.println(p.getPBrand());
+			System.out.println(p.getPCategory());
+			System.out.println(p.getPDescription());
+			System.out.println(p.getPId());
+			System.out.println(p.getPImage1());
+			System.out.println(p.getPImage1());
+			System.out.println(p.getPName());
+			System.out.println(p.getPPrice());
+			System.out.println(p.getPQty());
+			System.out.println(p.getPSubCategory());
+		}
+		}
+		
+	}
+	
+	
+	
+	@Test
+	public void getRetailerById(int rId) {
+		
+	
+		RetailerSignUp retailerSignUp=retailerDAOimpl.getRetailerById(rId);
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	public List<Product> showMyProducts(int rId) ;
+	public AddProduct updateProduct(AddProduct updateProduct, int pId) ;
+	public boolean addProduct(AddProduct product, int rId) ;
+	
+	public Product getProductById(int pId) ;
+}
